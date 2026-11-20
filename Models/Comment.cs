@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CosmeticPharmacy.Api.Models
 {
-    /// <summary>تعليق على منتج مع تقييم بالنجوم (Id, Content, Rating, CreatedAt, ProductId, CustomerId).</summary>
+    
     public class Comment
     {
         public int Id { get; set; }

@@ -3,10 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CosmeticPharmacy.Api.Models
 {
-    /// <summary>
-    /// تصنيف المنتجات. (Many-to-One مع المنتجات)
-    /// Data Annotations: CategoryName.   Fluent API: CategoryImage + الفهرس الفريد.
-    /// </summary>
+
     public class Category
     {
         [Key]

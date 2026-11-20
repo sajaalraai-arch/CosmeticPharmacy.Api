@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CosmeticPharmacy.Api.Models
 {
-    /// <summary>كيان الربط (Many-to-Many مع بيانات إضافية) بين السلة والمنتج. المفتاح (CartId, ProductId) عبر Fluent.</summary>
     public class CartItem
     {
         public int CartId { get; set; }

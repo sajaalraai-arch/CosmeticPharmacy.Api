@@ -17,7 +17,7 @@ namespace CosmeticPharmacy.Api.Services
             _env = env;
         }
 
-        /// <summary>كل التصنيفات مع عدد منتجات كل تصنيف، أو المفعّلة فقط.</summary>
+
         public async Task<List<CategoryListItemDto>> GetAllAsync(bool activeOnly = false)
         {
             var query = _db.Categories.AsNoTracking();
@@ -37,7 +37,7 @@ namespace CosmeticPharmacy.Api.Services
 
         public async Task<CategoryListItemDto?> GetByIdAsync(int id)
         {
-            var categories = await GetAllAsync();      // التصنيفات قليلة
+            var categories = await GetAllAsync();      
             return categories.FirstOrDefault(c => c.CategoryId == id);
         }
 
@@ -52,7 +52,7 @@ namespace CosmeticPharmacy.Api.Services
             return _db.Products.AnyAsync(p => p.CategoryId == id);
         }
 
-        /// <returns>رقم التصنيف الجديد.</returns>
+
         public async Task<int> CreateAsync(CategoryFormDto model)
         {
             var category = new Category
@@ -79,7 +79,7 @@ namespace CosmeticPharmacy.Api.Services
             await _db.SaveChangesAsync();
         }
 
-        /// <returns>false إذا لم يوجد التصنيف.</returns>
+
         public async Task<bool> DeactivateAsync(int id)
         {
             var category = await _db.Categories.FindAsync(id);
@@ -90,7 +90,7 @@ namespace CosmeticPharmacy.Api.Services
             return true;
         }
 
-        /// <returns>false إذا لم يوجد التصنيف.</returns>
+
         public async Task<bool> DeleteAsync(int id)
         {
             var category = await _db.Categories.FindAsync(id);
@@ -101,7 +101,7 @@ namespace CosmeticPharmacy.Api.Services
             return true;
         }
 
-        /// <summary>الصورة المرفوعة إن وُجدت، وإلا الرابط المُدخل، وإلا null.</summary>
+
         private async Task<string?> ResolveImageAsync(CategoryFormDto model)
         {
             return await ImageStorage.SaveAsync(model.ImageFile, _env)

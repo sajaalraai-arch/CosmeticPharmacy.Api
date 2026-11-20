@@ -11,7 +11,7 @@ namespace CosmeticPharmacy.Api.Dtos
         public int ProductsCount { get; set; }
     }
 
-    /// <summary>نموذج إضافة/تعديل تصنيف (multipart/form-data لإمكانية رفع صورة).</summary>
+
     public class CategoryFormDto
     {
         [Required(ErrorMessage = "Category Name is required")]

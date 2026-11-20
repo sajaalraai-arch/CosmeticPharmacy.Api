@@ -1,6 +1,6 @@
 namespace CosmeticPharmacy.Api.Helpers
 {
-    /// <summary>حفظ الصور المرفوعة داخل wwwroot/images وإرجاع المسار النسبي (/images/xxx.jpg) كما كان في المشروع القديم.</summary>
+
     public static class ImageStorage
     {
         private static readonly string[] AllowedExtensions = { ".jpg", ".jpeg", ".png", ".webp", ".gif" };

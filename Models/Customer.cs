@@ -3,10 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CosmeticPharmacy.Api.Models
 {
-    /// <summary>
-    /// العميل (كان User). يحمل الدور UserRole = Admin | Customer.
-    /// Annotation: FullName, Email, PasswordHash, Phone.   Fluent: UserRole, UserStatus, CreatedAt, LastLogin, ProfilePicture.
-    /// </summary>
+  
     public class Customer
     {
         public int CustomerId { get; set; }

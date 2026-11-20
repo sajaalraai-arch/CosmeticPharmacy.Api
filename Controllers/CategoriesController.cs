@@ -18,7 +18,7 @@ namespace CosmeticPharmacy.Api.Controllers
             _categories = categories;
         }
 
-        /// <summary>كل التصنيفات مع عدد منتجات كل تصنيف. منتجات التصنيف: GET api/products?categoryId={id}</summary>
+        
         [HttpGet]
         public async Task<ActionResult<List<CategoryListItemDto>>> GetAll()
         {
@@ -50,7 +50,7 @@ namespace CosmeticPharmacy.Api.Controllers
         {
             if (await _categories.GetByIdAsync(id) == null) return NotFound();
 
-            // نستثني التصنيف نفسه، فلا يُعدّ اسمه الحالي مكرراً
+          
             if (await _categories.NameExistsAsync(model.CategoryName, id))
                 return Conflict(new MessageDto { Message = NameExistsMessage });
 
@@ -58,7 +58,7 @@ namespace CosmeticPharmacy.Api.Controllers
             return Ok(await _categories.GetByIdAsync(id));
         }
 
-        /// <summary>204 = حُذف، 200 + رسالة = كان فيه منتجات فعُطّل بدل الحذف.</summary>
+
         [HttpDelete("{id:int:min(1)}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] int id)

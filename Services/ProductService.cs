@@ -20,7 +20,7 @@ namespace CosmeticPharmacy.Api.Services
             _env = env;
         }
 
-        /// <summary>قائمة المنتجات مع الإحصائيات؛ كل المعاملات اختيارية. ترجع null إذا لم يوجد التصنيف المطلوب.</summary>
+
         public async Task<ProductsIndexDto?> GetAllAsync(string? search, string? filter, int? categoryId, string? categoryName, bool hideExpired = false)
         {
             if (categoryId.HasValue)
@@ -36,7 +36,7 @@ namespace CosmeticPharmacy.Api.Services
             if (!string.IsNullOrWhiteSpace(categoryName))
                 scope = scope.Where(p => p.Category!.CategoryName == categoryName);
 
-            // صفحة المتجر ترسل hideExpired=true فلا يظهر المنتج المنتهي الصلاحية
+
             if (hideExpired)
             {
                 DateTime today = DateTime.Today;
@@ -63,12 +63,12 @@ namespace CosmeticPharmacy.Api.Services
             return product == null ? null : ToDetails(product);
         }
 
-        /// <summary>أول المنتجات الفعّالة (الصفحة الرئيسية).</summary>
+
         public async Task<List<ProductListItemDto>> GetTopActiveAsync(int count)
         {
             DateTime today = DateTime.Today;
 
-            // المنتج المنتهي الصلاحية لا يظهر في الصفحة الرئيسية
+
             var products = await _db.Products.AsNoTracking().Include(p => p.Category)
                 .Where(p => p.IsActive && p.ExpiryDate >= today)
                 .OrderBy(p => p.ProductId)
@@ -78,7 +78,7 @@ namespace CosmeticPharmacy.Api.Services
             return products.Select(ToListItem).ToList();
         }
 
-        /// <summary>أحدث المنتجات (لوحة التحكم).</summary>
+
         public async Task<List<ProductListItemDto>> GetLatestAsync(int count)
         {
             var products = await _db.Products.AsNoTracking().Include(p => p.Category)
@@ -100,7 +100,7 @@ namespace CosmeticPharmacy.Api.Services
             return _db.Categories.AnyAsync(c => c.CategoryId == categoryId);
         }
 
-        /// <returns>رقم المنتج الجديد.</returns>
+
         public async Task<int> CreateAsync(ProductFormDto model)
         {
             var product = new Product { MainImageUrl = (await ImageStorage.SaveAsync(model.ImageFile, _env))! };
@@ -124,13 +124,13 @@ namespace CosmeticPharmacy.Api.Services
             await _db.SaveChangesAsync();
         }
 
-        /// <summary>هل المنتج في طلبات سابقة؟ (الطلبات سجل لا يُحذف، أما السلات فمؤقتة)</summary>
+
         public Task<bool> IsInOrdersAsync(int id)
         {
             return _db.OrderItems.AnyAsync(oi => oi.ProductId == id);
         }
 
-        /// <summary>يعطّل المنتج ويحذفه من كل السلات (الطلبات السابقة لا تتأثر). ترجع false إذا لم يوجد.</summary>
+
         public async Task<bool> DeactivateAsync(int id)
         {
             var product = await _db.Products.FindAsync(id);
@@ -143,7 +143,7 @@ namespace CosmeticPharmacy.Api.Services
             return true;
         }
 
-        /// <summary>يحذف المنتج؛ صوره وبنوده في السلات تُحذف تلقائياً (Cascade). ترجع false إذا لم يوجد.</summary>
+
         public async Task<bool> DeleteAsync(int id)
         {
             var product = await _db.Products.FindAsync(id);
@@ -154,7 +154,8 @@ namespace CosmeticPharmacy.Api.Services
             return true;
         }
 
-        // ------------------------------------------------------------------ helpers
+
+
 
         private static IQueryable<Product> ApplySearchAndFilter(IQueryable<Product> query, string? search, string? filter)
         {
@@ -242,7 +243,7 @@ namespace CosmeticPharmacy.Api.Services
                 .ToList()
         };
 
-        /// <summary>ينسخ حقول النموذج إلى المنتج (مشترك بين الإضافة والتعديل).</summary>
+
         private static void Apply(Product product, ProductFormDto model)
         {
             product.ProductName = model.ProductName.Trim();
@@ -265,7 +266,7 @@ namespace CosmeticPharmacy.Api.Services
             product.IsActive = model.IsActive;
         }
 
-        /// <summary>يستبدل صور المعرض الموجودة بالترتيب ويضيف الجديدة (في الإضافة لا توجد صور قديمة).</summary>
+
         private async Task SaveGalleryAsync(Product product, ProductFormDto model)
         {
             var files = new[] { model.GalleryImage1, model.GalleryImage2, model.GalleryImage3 };

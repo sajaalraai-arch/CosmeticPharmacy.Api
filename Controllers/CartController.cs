@@ -26,7 +26,7 @@ namespace CosmeticPharmacy.Api.Controllers
             return await _cartService.GetCartAsync(CurrentCustomerId);
         }
 
-        // Applies (or removes) a discount code. The returned cart contains the message to show to the user.
+        
         [HttpPost("coupon")]
         public async Task<ActionResult<CartDto>> ApplyCoupon([FromBody] ApplyCouponDto dto)
         {

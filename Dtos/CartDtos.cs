@@ -29,7 +29,7 @@ namespace CosmeticPharmacy.Api.Dtos
         public string? Coupon { get; set; }
         public int ItemsCount { get; set; }
 
-        // Coupon information shown by Angular
+     
         public bool CouponApplied { get; set; }
         public int DiscountPercent { get; set; }
         public string? CouponMessage { get; set; }

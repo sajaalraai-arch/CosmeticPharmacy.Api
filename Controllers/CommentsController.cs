@@ -74,7 +74,7 @@ namespace CosmeticPharmacy.Api.Controllers
             return CreatedAtAction(nameof(GetByProduct), new { productId = comment.ProductId }, created);
         }
 
-        /// <summary>يحذف التعليق صاحبه أو الأدمن فقط.</summary>
+      
         [HttpDelete("{id:int:min(1)}")]
         [Authorize]
         public async Task<IActionResult> Delete([FromRoute] int id)

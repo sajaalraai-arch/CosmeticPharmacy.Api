@@ -52,11 +52,7 @@ namespace CosmeticPharmacy.Api.Dtos
         public string? CategoryName { get; set; }
     }
 
-    /// <summary>
-    /// äãæĞÌ ÅÖÇİÉ/ÊÚÏíá ãäÊÌ (multipart/form-data áÃäå íÍÊæí Úáì ÕæÑ).
-    /// ÃØæÇá ÇáÍŞæá ãØÇÈŞÉ áÃÚãÏÉ ŞÇÚÏÉ ÇáÈíÇäÇÊ. åäÇ ãßÇä ÇáÊÍŞŞ ÇáæÍíÏ ãä ÇáÈíÇäÇÊº
-    /// íÈŞì İí ÇáßäÊÑæáÑ İŞØ ãÇ íÍÊÇÌ ŞÇÚÏÉ ÇáÈíÇäÇÊ (ÊİÑøÏ ÇáÈÇÑßæÏ ææÌæÏ ÇáÊÕäíİ).
-    /// </summary>
+
     public class ProductFormDto : IValidatableObject
     {
         [Required, MaxLength(30)]

@@ -2,9 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CosmeticPharmacy.Api.Models
 {
-    /// <summary>
-    /// السلة: علاقة One-to-One مع العميل. (كانت جدول Baskets بسطر لكل منتج، أصبحت السلة + CartItems).
-    /// </summary>
+   
     public class Cart
     {
         [Key]
@@ -18,7 +16,7 @@ namespace CosmeticPharmacy.Api.Models
 
         public DateTime CreatedAt { get; set; }                    // Fluent
 
-        // Many-to-Many مع المنتجات عبر CartItem (كيان الربط مع بيانات إضافية)
+  
         public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
     }
 } 

@@ -12,7 +12,7 @@ namespace CosmeticPharmacy.Api.Services
         public const decimal CouponRate = 0.15m;
         public const string ValidCoupon = "rawanx2";
 
-        // Returned by the methods below when the product or the cart item does not exist.
+  
         public const string NotFoundError = "NotFound";
 
         private readonly CosmeticPharmacyProjectContext _db;
@@ -34,8 +34,7 @@ namespace CosmeticPharmacy.Api.Services
             return cart;
         }
 
-        // The price the customer pays: the discount price when it is a real discount,
-        // otherwise the normal price.
+        
         public static decimal GetUnitPrice(Product product)
         {
             if (product.DiscountPrice != null && product.DiscountPrice > 0 && product.DiscountPrice < product.Price)
@@ -44,7 +43,7 @@ namespace CosmeticPharmacy.Api.Services
             return product.Price;
         }
 
-        // Returns an error message when the product cannot be bought now, otherwise null.
+        
         private static string? CheckProductAvailable(Product product)
         {
             if (!product.IsActive || product.ExpiryDate.Date < DateTime.Today)
@@ -69,7 +68,7 @@ namespace CosmeticPharmacy.Api.Services
             };
         }
 
-        // Only reads data. Prices are calculated from the current product prices.
+        
         public async Task<CartDto> GetCartAsync(int customerId)
         {
             var cart = await GetOrCreateCartAsync(customerId);
@@ -123,7 +122,7 @@ namespace CosmeticPharmacy.Api.Services
             return cartDto;
         }
 
-        // Saves the coupon only when it is valid, and returns the cart with a message for the user.
+        
         public async Task<CartDto> ApplyCouponAsync(int customerId, string? code)
         {
             var cart = await GetOrCreateCartAsync(customerId);
@@ -160,8 +159,7 @@ namespace CosmeticPharmacy.Api.Services
                 .SumAsync(ci => (int?)ci.Quantity) ?? 0;
         }
 
-        // Returns null on success, NotFoundError when the product does not exist,
-        // otherwise a message that explains why the product could not be added.
+       
         public async Task<string?> AddToCartAsync(int customerId, int productId, int quantity)
         {
             var product = await _db.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
@@ -211,8 +209,7 @@ namespace CosmeticPharmacy.Api.Services
             return null;
         }
 
-        // Returns null on success, NotFoundError when the item is not in the cart,
-        // otherwise a message that explains why the quantity could not be changed.
+        
         public async Task<string?> UpdateQuantityAsync(int customerId, int productId, string action)
         {
             var item = await _db.CartItems
@@ -266,8 +263,7 @@ namespace CosmeticPharmacy.Api.Services
             await _db.SaveChangesAsync();
         }
 
-        // Everything happens inside one transaction: if anything fails, nothing is saved
-        // (no order is created and no stock is deducted).
+       
         public async Task<(Order? Order, string? Error)> PlaceOrderAsync(int customerId, PlaceOrderDto dto)
         {
             await using var transaction = await _db.Database.BeginTransactionAsync();
@@ -281,10 +277,10 @@ namespace CosmeticPharmacy.Api.Services
                 if (cart == null || cart.CartItems.Count == 0)
                     return (null, "Your cart is empty! Please add products before checking out.");
 
-                // Copy the items now: after the cart items are deleted below, the cart's own list may change.
+                
                 var cartItems = new List<CartItem>(cart.CartItems);
 
-                // 1) Check every product again with the current data from the database.
+                
                 decimal subtotal = 0;
                 foreach (var cartItem in cartItems)
                 {
@@ -331,14 +327,11 @@ namespace CosmeticPharmacy.Api.Services
                     PaymentState = "Pending"
                 });
 
-                // 2) Delete the cart items FIRST. If the same order is sent twice at the same time,
-                // the second request finds the rows already deleted and fails here,
-                // so the stock is never deducted twice and no duplicate order is created.
+                
                 _db.CartItems.RemoveRange(cartItems);
                 await _db.SaveChangesAsync();
 
-                // 3) Deduct the stock. The UPDATE only works when enough stock is left,
-                // so two customers can never buy the last items together.
+               
                 foreach (var cartItem in cartItems)
                 {
                     int updatedRows = await _db.Database.ExecuteSqlInterpolatedAsync(
@@ -351,7 +344,7 @@ namespace CosmeticPharmacy.Api.Services
                     }
                 }
 
-                // 4) Save the order and clear the coupon.
+               
                 _db.Orders.Add(order);
                 cart.CouponCode = null;
                 await _db.SaveChangesAsync();

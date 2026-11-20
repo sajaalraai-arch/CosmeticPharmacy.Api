@@ -16,7 +16,7 @@ namespace CosmeticPharmacy.Api.Controllers
             _products = products;
         }
 
-        /// <summary>GET api/products?search=&amp;filter=lowstock|expiring|active&amp;categoryId=1&amp;categoryName=Skin Care (كلها اختيارية)</summary>
+       
         [HttpGet]
         public async Task<ActionResult<ProductsIndexDto>> GetAll(
             [FromQuery] string? search, [FromQuery] string? filter,

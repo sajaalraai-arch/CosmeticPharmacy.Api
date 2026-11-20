@@ -2,7 +2,6 @@ using System.Security.Cryptography;
 
 namespace CosmeticPharmacy.Api.Helpers
 {
-    /// <summary>تشفير كلمات المرور بخوارزمية PBKDF2 (بدلاً من تخزينها كنص صريح).</summary>
     public static class PasswordHasher
     {
         private const int Iterations = 100_000;
