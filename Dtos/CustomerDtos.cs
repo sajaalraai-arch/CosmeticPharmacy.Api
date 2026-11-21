@@ -34,8 +34,7 @@ namespace CosmeticPharmacy.Api.Dtos
         [MaxLength(20)]
         public string? UserStatus { get; set; }
 
-        /// <summary>اختياري؛ القيمة الافتراضية 123456 كما في المشروع القديم.</summary>
-        public string? Password { get; set; }
+ٍِ        public string? Password { get; set; }
     }
 
     public class CustomerUpdateDto
